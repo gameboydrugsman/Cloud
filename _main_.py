@@ -100,8 +100,7 @@ def homepage():
 #def test():
 #    return render_template("cgi-bin/test.py")
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0',port=80, debug=True) #, ssl_context=ctx
+app.run(host='0.0.0.0',port=80, debug=True) #, ssl_context=ctx
 
 #print ("/test")
 #def registreren():
