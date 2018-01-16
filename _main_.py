@@ -13,9 +13,9 @@ db = client.test
 collection = db.test
 
 form = cgi.FieldStorage()
-ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
-ctx.load_cert_chain('D:/School/2017/BlokB/Cloud Infrastructures/Website/Practicum-cloudinfra/venv.crt',
-                    "D:/School/2017/BlokB/Cloud Infrastructures/Website/Practicum-cloudinfra/venv.key")
+# ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
+# ctx.load_cert_chain('D:/School/2017/BlokB/Cloud Infrastructures/Website/Practicum-cloudinfra/venv.crt',
+#                   "D:/School/2017/BlokB/Cloud Infrastructures/Website/Practicum-cloudinfra/venv.key")
 #make_ssl_devcert('C:/Users/Daniel van Liempd/PycharmProjects/Practicum-cloudinfra/venv', host='Daniel-PC', cn=None)
 #file = open('C:\Users\Daniel van Liempd\PycharmProjects\Practicum-cloudinfra\index.html')
 cgitb.enable()
@@ -101,7 +101,7 @@ def homepage():
 #    return render_template("cgi-bin/test.py")
 
 if __name__ == "__main__":
-    app.run(host='localhost',port=8081, debug=True, ssl_context=ctx)
+    app.run(host='0.0.0.0',port=80, debug=True) #, ssl_context=ctx
 
 #print ("/test")
 #def registreren():
@@ -123,5 +123,6 @@ if __name__ == "__main__":
 
 #registreren()
 
-#    app.run(host='127.0.0.1', port='12344',
-#            debug=False / True, ssl_context=context)
+#    app.run(host='0.0.0.0', port='80',
+#            debug=False / True,)
+# ssl_context=context
