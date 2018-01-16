@@ -100,7 +100,7 @@ def homepage():
 #def test():
 #    return render_template("cgi-bin/test.py")
 
-app.run(host='0.0.0.0',port=80, debug=True) #, ssl_context=ctx
+app.run(host='104.155.80.92',port=80, debug=True) #, ssl_context=ctx
 
 #print ("/test")
 #def registreren():
