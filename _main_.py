@@ -6,11 +6,6 @@ from pymongo import errors, MongoClient
 import sys, traceback
 
 app = Flask(__name__)
-ipaddress = '127.0.0.1'
-port = 27017
-client = MongoClient(ipaddress, port)
-db = client.test
-collection = db.test
 
 form = cgi.FieldStorage()
 # ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
