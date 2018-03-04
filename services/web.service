@@ -7,7 +7,7 @@ ExecStart=/usr/bin/python _main_.py
 User=root
 Environment=PATH=/usr/bin:/usr/local/bin
 Environment=NODE_ENV=production
-WorkingDirectory=/home/root/Cloud
+WorkingDirectory=/root/Cloud
 
 
 [Install]
