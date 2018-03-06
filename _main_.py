@@ -6,7 +6,7 @@ from pymongo import errors, MongoClient
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-ipaddress = '10.0.1.17'
+ipaddress = '10.1.0.17'
 port = 27017
 client = MongoClient(ipaddress, port)
 db = client.gebruikers
