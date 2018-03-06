@@ -13,9 +13,9 @@ db = client.gebruikers
 collection = db.users
 
 form = cgi.FieldStorage()
-ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
-ctx.load_cert_chain('C:/Users/Daniel van Liempd/PycharmProjects/Practicum-cloudinfra/venv.crt',
-                    'C:/Users/Daniel van Liempd/PycharmProjects/Practicum-cloudinfra/venv.key')
+# ctx = SSLContext(ssl.PROTOCOL_SSLv23)
+# ctx.load_cert_chain('C:/Users/Daniel van Liempd/PycharmProjects/Practicum-cloudinfra/venv.crt',
+#                     'C:/Users/Daniel van Liempd/PycharmProjects/Practicum-cloudinfra/venv.key')
 #make_ssl_devcert('C:/Users/Daniel van Liempd/PycharmProjects/Practicum-cloudinfra/venv', host='Daniel-PC', cn=None)
 #file = open('C:\Users\Daniel van Liempd\PycharmProjects\Practicum-cloudinfra\index.html')
 cgitb.enable()
