@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from pymongo import MongoClient
 
-app = Flask(_name_)
+app = Flask(__name__)
 client = MongoClient("10.0.1.18",27017)
 mongo = client['gebruikers']
 collection = mongo.test
@@ -48,5 +48,5 @@ def registreren():
   #db.users.create_index([("Naam", pymongo.ASCENDING)], unique=True)
   return jsonify({'resultaat' : resultaat})
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True)
