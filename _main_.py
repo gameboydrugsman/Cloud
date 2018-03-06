@@ -6,7 +6,7 @@ from pymongo import errors, MongoClient
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-ipaddress = '10.0.1.12'
+ipaddress = '10.0.1.17'
 port = 27017
 client = MongoClient(ipaddress, port)
 db = client.gebruikers
@@ -189,10 +189,10 @@ def register_page():
                     postcode = restapi_postcode
                     data = ({"Naam": register_name, "Password": register_password, "Adres": adres,
                              "Postcode": postcode})
-                    r = requests.post('http://127.0.0.1:5000/registreren', json=data)
+                    r = requests.post('http://10.1.0.15:5000/registreren', json=data)
                     headers = {'Content-type': 'application/json'}
                     #time.sleep(2)
-                    r = requests.get('http://127.0.0.1:5000/gebruikers', json={"naam": "Daniel"})
+                    r = requests.get('http://10.1.0.15:5000/gebruikers', json={"naam": "Daniel"})
                     headers = {'Content-type': 'application/json'}
                     pils = r.content
                     str2 = bytes.decode(pils)
