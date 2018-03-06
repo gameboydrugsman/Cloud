@@ -1,122 +1,53 @@
-from flask import Flask, request, render_template, url_for, redirect
-from OpenSSL import SSL
-from werkzeug.serving import make_ssl_devcert
-import ssl, cgi, cgitb, pymongo, pprint, time
-from pymongo import errors, MongoClient
-import sys, traceback
+from flask import Flask, jsonify, request
+from pymongo import MongoClient
 
 app = Flask(__name__)
+client = MongoClient("mongo.novalocal",27017)
+mongo = client['gebruikers']
+collection = mongo.test
 
-form = cgi.FieldStorage()
-# ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
-# ctx.load_cert_chain('D:/School/2017/BlokB/Cloud Infrastructures/Website/Practicum-cloudinfra/venv.crt',
-#                   "D:/School/2017/BlokB/Cloud Infrastructures/Website/Practicum-cloudinfra/venv.key")
-#make_ssl_devcert('C:/Users/Daniel van Liempd/PycharmProjects/Practicum-cloudinfra/venv', host='Daniel-PC', cn=None)
-#file = open('C:\Users\Daniel van Liempd\PycharmProjects\Practicum-cloudinfra\index.html')
-cgitb.enable()
+@app.route('/gebruikers', methods=['GET'])
+def alles_opvragen():
+  users = mongo.users
+  resultaat = []
+  for u in users.find():
+    resultaat.append({'Naam' : u['Naam'], 'wachtwoord' : u['Password'], 'Adres' : u['Adres'],'Postcode' : u['Postcode']})
+  return jsonify({'resultaat' : resultaat})
 
-@app.route("/login", methods=['GET'])
-def login():
- #    if request.method == 'POST':
- #        try:
- #            print ('test')
- #            login_name = request.args.get['username']  # die laatste waarde, dient voor een vervanging voor 'None'
- #            login_password = request.args.get['password']
- #            print ("gelukt")
- #           # register_name = request.form['register_name', '']
- #            # register_password = request.form['register_password', '']
- #            # adres = request.form['adres', '']
- #            # geslacht = request.form['geslacht', '']
- #            # geboortejaar = request.form['geboortejaar', '']
- #            if login_name != '' and login_password != '':
- # #              flash (login_password, login_name)
- #                print("if")
- #                return render_template('index.html')
- #        except:
- #            print("except")
- #            return render_template('index.html')
+@app.route('/gebruikers/<string:naam>', methods=['GET'])
+def een_opvragen(naam):
+  users = mongo.users
+  u = users.find_one({'naam' : naam})
+  if u:
+    resultaat = {'Naam' : u['Naam'], 'wachtwoord' : u['Password'], 'Adres' : u['Adres'],'Postcode' : u['Postcode']}
+  else:
+    resultaat = "Geen correcte gegevens ingevoerd"
+  return jsonify({'resultaat' : resultaat})
 
-    if request.method == 'GET':
-        try:
-            print('test2')
-            login_name = request.args.getlist('username')[0]  # die laatste waarde, dient voor een vervanging voor 'None'
-            login_password = request.args.getlist('password')[0]
-            print("gelukt")
+@app.route('/delete/<string:Naam>', methods=['DELETE'])
+def delete(naam):
+  users = mongo.users
+  u = users.find_one({'Naam' : naam})
+  if u:
+    users.remove({'Naam': naam })
+    return jsonify({'resultaat' : "Gelukt!"})
+  else:
+    resultaat = "Geen correcte gegevens ingevoerd"
+    return jsonify({'resultaat' : resultaat})
 
-            # register_name = request.form['register_name', '']
-            # register_password = request.form['register_password', '']
-            # adres = request.form['adres', '']
-            # geslacht = request.form['geslacht', '']
-            # geboortejaar = request.form['geboortejaar', '']
-            if login_name != '' and login_password != '':
-                #              flash (login_password, login_name)
-                print (login_name)
-                print (login_password)
+@app.route('/registreren', methods=['POST'])
+def registreren():
+  users = mongo.users
+  Naam = request.json['Naam']
+  password = request.json['Password']
+  Adres = request.json['Adres']
+  Postcode = request.json['Postcode']
+# leeftijd = request.json['leeftijd']
+  user_id = users.insert({'Naam': Naam,'Password': password,'Adres': Adres,'Postcode': Postcode})
+  new_user = users.find_one({'_id': user_id })
+  resultaat = {'naam' : new_user['Naam'],'Password': new_user['Password'],'Adres': new_user['Adres'], 'Postcode': new_user['Postcode']}
+  #db.users.create_index([("Naam", pymongo.ASCENDING)], unique=True)
+  return jsonify({'resultaat' : resultaat})
 
-                if login_name == 'Admin' and login_password == 'cisco12345':
-                    print ("GELUKT!")
-                    return render_template('index.html')
-
-                    #return ('Welkom ', login_name, '!')
-
-                else:
-                    print("if2")
-                    return render_template('index.html')
-        except:
-            print ("except2")
-            return render_template('index.html')
-
-    else:
-        print ("else2")
-        return render_template('index.html')
-
-        # return render_template('index.html', error = error)
-        #
-        #    if register_name != '' and register_password != '':
-        #        db.test.insert({"Naam": register_name}, {"Password": register_password},
-        #                       {"Adres": adres}, {"Geboortejaar": geboortejaar})
-        #        db.test.create_index([("wat?", pymongo.ASCENDING)], unique=True)
-        #        print("Toegevoegd!")
-
-@app.route("/register")
-def register_page():
-#    login_name = form.getvalue('login_name', '')  # die laatste waarde, dient voor een vervanging voor 'None'
-#    login_password = form.getvalue('login_password', '')
-        return render_template('register.html')
-
-@app.route("/")
-def base():
-    return ('testbase')
-
-@app.route("/homepage")
-def homepage():
-    return ('test')
-
-#def test():
-#    return render_template("cgi-bin/test.py")
-
-app.run(host='0.0.0.0',port=80, debug=True) #, ssl_context=ctx
-
-#print ("/test")
-#def registreren():
-#    while True:
-#        login_name          = request.form['login_name', ''] #die laatste waarde, dient voor een vervanging voor 'None'
-#        login_password      = request.form['login_password', '']
-#        register_name       = request.form['register_name', '']
-#        register_password   = request.form['register_password', '']
-#        adres               = request.form['adres', '']
-#        geslacht            = request.form['geslacht', '']
-#        geboortejaar        = request.form['geboortejaar', '']
-#
-#        if register_name != '' and register_password != '':
-
-#            db.test.insert({"Naam": register_name}, {"Password": register_password},
-#            {"Adres": adres},{"Geboortejaar": geboortejaar})
-#            db.test.create_index([("wat?", pymongo.ASCENDING)], unique=True)
-#            print("Toegevoegd!")
-
-#registreren()
-
-#    app.run(host='0.0.0.0', port='80',
-#            debug=False / True,)
-# ssl_context=context
+if __name__ == '__main__':
+    app.run(host='127.0.0.1',debug=True)
