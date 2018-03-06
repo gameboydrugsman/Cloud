@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, request
 from pymongo import MongoClient
 
-app = Flask(__name__)
-client = MongoClient("10.1.0.18",27017)
+app = Flask(_name_)
+client = MongoClient("10.0.1.18",27017)
 mongo = client['gebruikers']
 collection = mongo.test
 
@@ -14,10 +14,10 @@ def alles_opvragen():
     resultaat.append({'Naam' : u['Naam'], 'wachtwoord' : u['Password'], 'Adres' : u['Adres'],'Postcode' : u['Postcode']})
   return jsonify({'resultaat' : resultaat})
 
-@app.route('/gebruikers/<string:naam>', methods=['GET'])
-def een_opvragen(naam):
+@app.route('/gebruiker/<string:Naam>', methods=['GET'])
+def een_opvragen(Naam):
   users = mongo.users
-  u = users.find_one({'naam' : naam})
+  u = users.find_one({'Naam' : Naam})
   if u:
     resultaat = {'Naam' : u['Naam'], 'wachtwoord' : u['Password'], 'Adres' : u['Adres'],'Postcode' : u['Postcode']}
   else:
@@ -25,11 +25,11 @@ def een_opvragen(naam):
   return jsonify({'resultaat' : resultaat})
 
 @app.route('/delete/<string:Naam>', methods=['DELETE'])
-def delete(naam):
+def delete(Naam):
   users = mongo.users
-  u = users.find_one({'Naam' : naam})
+  u = users.find_one({'Naam' : Naam})
   if u:
-    users.remove({'Naam': naam })
+    users.remove({'Naam': Naam })
     return jsonify({'resultaat' : "Gelukt!"})
   else:
     resultaat = "Geen correcte gegevens ingevoerd"
@@ -42,12 +42,11 @@ def registreren():
   password = request.json['Password']
   Adres = request.json['Adres']
   Postcode = request.json['Postcode']
-# leeftijd = request.json['leeftijd']
   user_id = users.insert({'Naam': Naam,'Password': password,'Adres': Adres,'Postcode': Postcode})
-  new_user = users.find_one({'_id': user_id })
-  resultaat = {'naam' : new_user['Naam'],'Password': new_user['Password'],'Adres': new_user['Adres'], 'Postcode': new_user['Postcode']}
+  u = users.find_one({'_id': user_id })
+  resultaat = {'Naam' : u['Naam'],'Password': u['Password'],'Adres': u['Adres'], 'Postcode': u['Postcode']}
   #db.users.create_index([("Naam", pymongo.ASCENDING)], unique=True)
   return jsonify({'resultaat' : resultaat})
 
-if __name__ == '__main__':
+if _name_ == '_main_':
     app.run(host='0.0.0.0',debug=True)
