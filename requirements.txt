@@ -2,4 +2,4 @@ flask
 werkzeug
 pymongo
 pyOpenSSL
-urllib.parse
+urllib
