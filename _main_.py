@@ -3,12 +3,13 @@ from OpenSSL import SSL
 from werkzeug.serving import make_ssl_devcert
 import ssl, cgi, cgitb, pymongo, pprint, time, hashlib, datetime, os, sys, traceback, requests
 from pymongo import errors, MongoClient
+import urllib
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-ipaddress = 'mongo'
-port = 27017
-client = MongoClient(ipaddress, port)
+username = urllib.quote_plus('root')
+password = urllib.quote_plus('example')
+client = MongoClient('mongodb://%s:%s@mongo' % (username, password))
 db = client.gebruikers
 collection = db.users
 
