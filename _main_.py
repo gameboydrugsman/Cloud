@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from pymongo import MongoClient
-from urlparse import urlparse
+import urllib
 
 app = Flask(__name__)
 username = urllib.quote_plus('root')
