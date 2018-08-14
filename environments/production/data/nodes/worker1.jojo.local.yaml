@@ -1,0 +1,4 @@
+---
+classes:
+    - role::base::base_linux
+    - role::docker::docker_worker

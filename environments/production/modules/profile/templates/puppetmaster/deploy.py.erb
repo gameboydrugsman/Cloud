@@ -1,0 +1,24 @@
+from __future__ import print_function
+from flask import Flask, request, abort
+import os
+import sys
+
+app = Flask(__name__)
+
+@app.route("/hooks", methods=['POST'])
+def hooks():
+    if request.method == 'POST':
+        if request.headers.get('X-GitHub-Event') == "push":
+            req_data = request.get_json()
+            branch_data = req_data['repository']['name']
+            if branch_data == "Puppethome":
+                branch_data1 = req_data['ref']
+                if branch_data1 == "refs/heads/master":
+                    print("This is a Push from master, deploying application", file=sys.stderr)
+                    os.system("sh <%= @dirsh %>")
+        return '', 200
+    else:
+        abort(400)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0',port=8081, debug=True)

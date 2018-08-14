@@ -1,0 +1,16 @@
+source "https://rubygems.org"
+puts RUBY_VERSION
+
+group :test do
+  gem "rake"
+  gem "puppet", ENV['PUPPET_VERSION'] || '~> 3.8.0'
+  gem "rspec-puppet", :git => 'https://github.com/rodjek/rspec-puppet.git'
+  gem "puppetlabs_spec_helper"
+  gem 'json', '~>1.0' if RUBY_VERSION == '1.9.3'
+  gem 'json_pure', '~>1.0' if RUBY_VERSION == '1.9.3'
+  gem 'safe_yaml', '~> 1.0.4'
+end
+
+group :development do
+  gem "puppet-blacksmith"
+end

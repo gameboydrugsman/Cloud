@@ -1,0 +1,3 @@
+---
+classes:
+ - role::docker::docker_manager

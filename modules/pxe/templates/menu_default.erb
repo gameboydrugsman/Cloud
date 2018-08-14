@@ -1,0 +1,15 @@
+DEFAULT menu.c32
+PROMPT 0
+TIMEOUT 50
+ONTIMEOUT local
+
+MENU TITLE Main Menu
+
+LABEL local
+  MENU LABEL Boot first hard drive
+  LOCALBOOT 0
+
+LABEL reboot
+  MENU LABEL Reboot
+  KERNEL reboot.c32
+

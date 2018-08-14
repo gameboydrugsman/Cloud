@@ -1,0 +1,13 @@
+FROM centos:7
+
+RUN yum -y install git python; \
+	yum clean all; \
+	curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python get-pip.py; \
+	git clone -b frontend https://github.com/jorisdejosselin/Cloud.git;
+
+WORKDIR /Cloud/
+
+RUN pip install -r requirements.txt;
+
+EXPOSE 80
+CMD ["/usr/bin/python","_main_.py"]

@@ -1,0 +1,14 @@
+{
+  "Gemfile": "1d7edc4b88c1db85ecef1168041981a8",
+  "README.md": "ec4c46d1681bf66cb8ba4309a5548a27",
+  "Rakefile": "1229bb6a344b98c0e53d34e9e01b5776",
+  "appveyor.yml": "105dce352be3244a497e667f6b0403c7",
+  "functions/true_unless_no_noop.pp": "20415625f6a104017c86856a69797204",
+  "lib/facter/noop_cli_value.rb": "f1a71e33d5a924b3197ea9b33860107a",
+  "lib/puppet/functions/noop/class_interface.rb": "3a464f1ae774d65d82618ac5be94e769",
+  "lib/puppet/functions/noop.rb": "9f6c18260041a8904096b4cc08304d20",
+  "metadata.json": "e1aab8b417f86204cc89efd12b706ce9",
+  "spec/default_facts.yml": "4de3cb611af6981a6d22bc77d7dd6f6f",
+  "spec/functions/noop_spec.rb": "fb7d4099193acb0602adeab99fdfc691",
+  "spec/spec_helper.rb": "6a8493cc89df06740a1f7ed364aed66c"
+}

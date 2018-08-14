@@ -1,0 +1,16 @@
+{
+  "Gemfile": "b30709e0c5ff5bc25d35e82fff2b46d6",
+  "Makefile": "17d84c9c5c4e2bf653413f4b30026571",
+  "README.md": "61c492d33c3f6093a018c9e3fe1cd3c9",
+  "Rakefile": "3c65c0650e68771854036fbe67fb0f5d",
+  "examples/absent.pp": "03f4bb02448a0ae6b837c33e77048c39",
+  "examples/mounted.pp": "a2566e1cf7fc3b9916f97f4a3cd429b7",
+  "lib/puppet/provider/mount/windows_smb.rb": "7165fbc8e3c6604cea598dbc53c08557",
+  "manifests/init.pp": "22dcd8fbef8740f8b994bf8ab319572f",
+  "metadata.json": "39c9b22d874677fca4059687b90c54b4",
+  "spec/acceptance/init.bats": "01c8ee6ee7ca37b05584945c99b7f9a3",
+  "spec/acceptance/init__before.bats": "3d06f6854c5fb1e5717364eb813fe118",
+  "spec/acceptance/init__setup.sh": "5085ce8fcaf62634db37041c702b5208",
+  "spec/classes/init_spec.rb": "a7d95df3250363122adaf7af451f83c7",
+  "spec/spec_helper.rb": "0db89c9a486df193c0e40095422e19dc"
+}

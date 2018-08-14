@@ -1,0 +1,160 @@
+user  nobody;
+worker_processes  1;
+
+#error_log  /opt/var/log/nginx/error.log;
+#error_log  /opt/var/log/nginx/error.log  notice;
+#error_log  /opt/var/log/nginx/error.log  info;
+
+#pid        /opt/var/run/nginx.pid;
+
+
+
+events {
+    worker_connections  64;
+}
+
+
+http {
+	server_tokens off;
+    server_names_hash_bucket_size 64;
+    server {
+	if ($host = jorisdejosselindejong.nl) {
+		return 301 https://$host$request_uri;
+	} # managed by Certbot
+
+	if ($host = owncloud.jorisdejosselindejong.nl) {
+		return 301 https://$host$request_uri;
+	} # managed by Certbot
+
+	if ($host = mail.jorisdejosselindejong.nl) {
+		return 301 https://$host$request_uri;
+	} # managed by Certbot
+
+	if ($host = monitoring.jorisdejosselindejong.nl) {
+		return 301 https://$host$request_uri;
+	} # managed by Certbot
+
+	if ($host = joict.nl) {
+		return 301 https://$host$request_uri;
+	} # managed by Certbot
+
+	if ($host = owncloud.joict.nl) {
+		return 301 https://$host$request_uri;
+	} # managed by Certbot
+
+	if ($host = mail.joict.nl) {
+		return 301 https://$host$request_uri;
+	} # managed by Certbot
+
+	if ($host = monitoring.joict.nl) {
+		return 301 https://$host$request_uri;
+	} # managed by Certbot
+
+	listen 80;
+	server_name jorisdejosselindejong.nl;
+		return 404; # managed by Certbot
+}
+
+	server {
+		include /opt/etc/nginx/sites-enabled/ssl.conf;
+		listen 443 ssl; # managed by Certbot
+		server_name jorisdejosselindejong.nl;
+		location / {
+			proxy_set_header   X-Forwarded-For $remote_addr;
+
+			proxy_set_header   Host $http_host;
+
+			proxy_pass         "http://192.168.178.101:3000";
+		}
+
+	}
+
+	server {
+		include /opt/etc/nginx/sites-enabled/ssl-owncloud.conf;
+		listen 443 ssl; # managed by Certbot
+		server_name owncloud.jorisdejosselindejong.nl;
+		location / {
+			proxy_set_header   X-Forwarded-For $remote_addr;
+
+			proxy_set_header   Host $http_host;
+
+			proxy_pass         "http://192.168.178.101:60000";
+		}
+	}
+
+	server {
+		listen 443 ssl; # managed by Certbot
+		server_name mail.jorisdejosselindejong.nl;
+		location / {
+			proxy_set_header   X-Forwarded-For $remote_addr;
+
+			proxy_set_header   Host $http_host;
+
+			proxy_pass         "https://192.168.178.103";
+		}
+	}
+
+	server{
+		include /opt/etc/nginx/sites-enabled/ssl-monitoring.conf;
+		listen 443 ssl; # managed by Certbot
+		server_name monitoring.jorisdejosselindejong.nl;
+		location / {
+			proxy_set_header   X-Forwarded-For $remote_addr;
+
+			proxy_set_header   Host $http_host;
+
+			proxy_pass         "http://192.168.178.101:19999";
+		}
+	}
+	server {
+		include /opt/etc/nginx/sites-enabled/ssl.conf;
+		listen 443 ssl; # managed by Certbot
+		server_name joict.nl;
+		location / {
+			proxy_set_header   X-Forwarded-For $remote_addr;
+
+			proxy_set_header   Host $http_host;
+
+			proxy_pass         "http://192.168.178.101:3000";
+		}
+
+	}
+
+	server {
+		include /opt/etc/nginx/sites-enabled/ssl-owncloud.conf;
+		listen 443 ssl; # managed by Certbot
+		server_name owncloud.joict.nl;
+		location / {
+			proxy_set_header   X-Forwarded-For $remote_addr;
+
+			proxy_set_header   Host $http_host;
+
+			proxy_pass         "http://192.168.178.101:60000";
+		}
+	}
+
+	server {
+		listen 443 ssl; # managed by Certbot
+		server_name mail.joict.nl;
+		location / {
+			proxy_set_header   X-Forwarded-For $remote_addr;
+
+			proxy_set_header   Host $http_host;
+
+			proxy_pass         "https://192.168.178.103";
+		}
+	}
+
+	server{
+		include /opt/etc/nginx/sites-enabled/ssl-monitoring.conf;
+		listen 443 ssl; # managed by Certbot
+		server_name monitoring.joict.nl;
+		location / {
+			proxy_set_header   X-Forwarded-For $remote_addr;
+
+			proxy_set_header   Host $http_host;
+
+			proxy_pass         "http://192.168.178.101:19999";
+		}
+	}
+}

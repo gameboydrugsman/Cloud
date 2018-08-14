@@ -1,0 +1,108 @@
+{
+  "types": [
+    {
+      "parameters": [
+        {
+          "doc": "Zimbra mailing list id",
+          "name": "list"
+        },
+        {
+          "doc": "list domain",
+          "name": "domain"
+        }
+      ],
+      "properties": [
+        {
+          "doc": "The basic property that the resource should be in.  Valid values are `present`, `absent`.",
+          "name": "ensure"
+        },
+        {
+          "doc": "mailing list's members",
+          "name": "members"
+        },
+        {
+          "doc": "Display Name",
+          "name": "display_name"
+        },
+        {
+          "doc": "mailing list's aliases",
+          "name": "aliases"
+        }
+      ],
+      "providers": [
+        {
+          "doc": "Manages mailing lists for Zimbra Collaboration Suite\n\nRequired binaries: `/opt/zimbra/bin/zmmailbox`, `/opt/zimbra/bin/ldapsearch`, `/opt/zimbra/bin/zmlocalconfig`, `/opt/zimbra/bin/zmprov`.  Default for `operatingsystem` == `Ubuntu`.",
+          "name": "zmprov"
+        }
+      ],
+      "doc": "Type to manage Zimbra mailing lists",
+      "name": "zimbra_list"
+    },
+    {
+      "parameters": [
+        {
+          "doc": "Mailbox",
+          "name": "mailbox"
+        },
+        {
+          "doc": "Account domain",
+          "name": "domain"
+        },
+        {
+          "doc": "mailbox location in the cluster",
+          "name": "location"
+        },
+        {
+          "doc": "username",
+          "name": "user_name"
+        },
+        {
+          "doc": "Mailbox password",
+          "name": "pwd"
+        }
+      ],
+      "properties": [
+        {
+          "doc": "The basic property that the resource should be in.  Valid values are `present`, `absent`.",
+          "name": "ensure"
+        },
+        {
+          "doc": "Mailbox aliases",
+          "name": "aliases"
+        },
+        {
+          "doc": "The size of the mailbox",
+          "name": "mailbox_size"
+        }
+      ],
+      "providers": [
+        {
+          "doc": "Manage users for Zimbra Collaboration Suite\n\nRequired binaries: `/opt/zimbra/bin/zmmailbox`, `/opt/zimbra/bin/ldapsearch`, `/opt/zimbra/bin/zmlocalconfig`, `/opt/zimbra/bin/zmprov`.  Default for `operatingsystem` == `Ubuntu`.",
+          "name": "zmprov"
+        }
+      ],
+      "doc": "Type to manage Zimbra users",
+      "name": "zimbra_user"
+    }
+  ],
+  "license": "Apache License, Version 2.0",
+  "source": "UNKNOWN",
+  "version": "0.0.1",
+  "author": "Evelio Vila",
+  "dependencies": [
+
+  ],
+  "project_page": "https://github.com/eveliovila/puppet-zimbra",
+  "description": "UNKNOWN",
+  "summary": "A Puppet module to manage the Zimbra CS",
+  "name": "eveliovila-zimbra",
+  "checksums": {
+    "lib/puppet/provider/zimbra_user/zmprov.rb": "a4b5d9b7443eb828fd785455c9c0fc24",
+    "lib/puppet/type/zimbra_list.rb": "44dff01a19b362521fd0df7ad2b97f12",
+    "Modulefile": "69fec390bae1fa52d82572ac88482310",
+    "lib/puppet/type/zimbra_user.rb": "74b57e95a3dffc6af8eb0bc048167674",
+    "manifests/init.pp": "724f307fd68fd06e71b458965ddd5861",
+    "lib/puppet/provider/zimbra_list/zmprov.rb": "24beb5b3456cfad13efb62f796924b6e",
+    "README.md": "3ac2b23f1480b0a841bd76c2e3decb0a"
+  }
+}

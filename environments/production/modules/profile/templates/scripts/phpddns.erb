@@ -1,0 +1,127 @@
+<?php
+while (true) {
+        sleep(60);
+        // Benodigde API en instellingen (graag nalopen!)
+        require_once('lib/Transip/DomainService.php');
+        $domains = array('jorisdejosselindejong.nl','joict.nl','jojolocal.nl');
+        // TRANSIP Account
+        if (!defined('USERNAME')) {
+                define('USERNAME', 'gameboydrugsman');
+            }
+        // API Key
+        if (!defined('PRIVATE_KEY')) {
+                define('PRIVATE_KEY', '-----BEGIN PRIVATE KEY-----
+                MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDWQddKpzeVl5jR
+                v7vqIPGGri/lN9EEqUf4bQKzTU3B2SP+YHRPW2ZVWTzgmwnzjFidWxa7yxn2f36b
+                SML8iqjnTq7nXlH7mhkyWHRWQ1SuRjXe55AP62imx/CBpx44Gv7NtwIAjEaf8M9Z
+                OPVfkxKB8J4BYLYPMxtWgEuK3e+82VkDYWHbEUo1nlYcvGLPUPZtK6Sggu5nPhmL
+                br1T3iRxokEqBOZzgnK8LNWOTXQ1vb9S/1ps/nl34xHA0VbMkB6I4zjaTfl7eWEI
+                YHVqlvyhJ8oDCeZbOLFoxGjRS0VP/odI+1NB0wNQmPcPPm3i/HJ0gkCxKPkxQKRB
+                tCVONjzxAgMBAAECggEAVgVJMqfAIUckC9I21+EyFyiIAjdOq9hrFMpvcx1uQo2z
+                bcW77MB9bXbOgj682BNY4JRZpDv+yICXjDDCWDIzbeqhPjMYJzPPOe9ZheiybuWx
+                azT9GechtRRA80ztTQlJk74OB7pKAJzmIqRDn4OkwpagWV1CuweBylDoA3Dnd6Hv
+                bvh9cjkDGSaHpezNHnAZTMk8EUFCUnfHpexv+pIQilKJFnEd7eNp+cD5OgEsifqt
+                i8PYiZl9AiZ8R1qbNjrRvMhfs/bAT5/vo7PcvU3mfGMeUOab53RShhdjhhtVKP+S
+                XeA3Y68rWGeoIRYqav/nhx7nvuWpQdTy7uy++M8vgQKBgQDzlZuQUf8ydgQBzGvl
+                Cg41f4F1guXJITWvfCPevAYdxH49tzADoAGBmRKl7Hbuh6juyh7lfE9Pb9Cm7mb5
+                UoU3BXd8cgzoNhUNY97W+6S6ZOUwRlqj4Jc/KIOvMAT8wUVX8YQtD5ff2Rv1qhm9
+                2DxSdlmeCp90YySXlgBnySUQtQKBgQDhLY82igUK4nUJ3CQYebW4AfSCJEF/rouL
+                yOPCHXeO2GMayiQoV7uNnQqXC9OAM2uu7M28B1CHtbA0W7pG5XluP/65GJDiggXr
+                drSE0HK6UBev4YfUDLmiQHe9KCyQ5vFFeMD2rcT+f8mXEKGAUVMNohhNDZ3BIeCx
+                VRMb4T3szQKBgQDELWPisgdkbqP/htIG3zheYdiz+b5zZGnGcaa6BpiudMhvkA/9
+                e2p7I/te4rlOlre5ydNkY9/ETHuxViRc/NcJXz/CXGCEzLnb1OluH7Gl5Qio/qCV
+                h5aIaWrVN0ls/4OHtp4LZJme0U6xZlPhEDxU9bhrjoapyAd6hnbBH8DYWQKBgH+K
+                TpOVmUWQ/rmW9trmFQckFFmiL3ciZefG4ToRdqZx6bBCzjgLeS+8w0LKcAEtHtD1
+                T5IwkmxLfIIrcla1oxHPLXepcmbZPoEfux9+8XyV4NS96TEyA/LikO+S0atBI2c1
+                /hW6VtnPh18JDHChn2kZZqo+DBxYE+xdQ3WHHowBAoGBAM5WsPjc2IVgyNGPm+Dx
+                MQTR9Ksqc9JtpmN18M1FwL4vJnGa0+fSE+HfOpVWxZLczOop5crO4KHGq2pYSEDU
+                NgVsx2t8d0e7BsXPT0gES0mk8TDIc/ntKkAV/Qf4W2p1nRIN4yTaIq/dVWcQ+2HE
+                wDxkZpgxgJi7JkK+vF97WVXV
+                -----END PRIVATE KEY-----');
+            }
+
+        // Haalt het externe adres op...
+        $ipAddress = file_get_contents('http://ipecho.net/plain');
+        echo "Huidig IP: ".$ipAddress . PHP_EOL;
+        $newValues = [
+        '@' => $ipAddress,
+        ];
+        if (!defined('DOMAIN')) {
+                define('DOMAIN', 'nodomain');
+            }
+
+        // cVerbinden met de TransIP API
+        Transip_ApiSettings::$login=USERNAME;
+        Transip_ApiSettings::$privateKey= PRIVATE_KEY;
+        foreach($domains as $domain){
+                uopz_redefine('DOMAIN', $domain);
+                $dnsEntries = Transip_DomainService::getInfo(DOMAIN)->dnsEntries;
+
+                // Huidge DNS records controleren
+
+                $change_det=0;
+
+                foreach($dnsEntries as $dnsEntry)
+                {
+
+                // @ Wildcard controleren
+                if (($dnsEntry->type == Transip_DnsEntry::TYPE_A) && ($dnsEntry->name == '@')) {
+
+                // Moet er geupdate worden?
+                if ($dnsEntry->content != $ipAddress){
+                echo "updating old ip " . $dnsEntry->content . ", with: ". $ipAddress . PHP_EOL;
+                $dnsEntry->content = $newValues[$dnsEntry->name];
+                $change_det=1;
+                }
+                else
+                {
+                $time = date('d/m/Y h:i:s a', time());
+                file_put_contents("logging.txt", "". $time ." Geen update nodig, huidig IP: " . $dnsEntry->content . " is onveranderd.\r\n", FILE_APPEND);
+
+                echo "Geen update nodig, huidig IP: " . $dnsEntry->content . " is onveranderd.".PHP_EOL;
+                }
+                break;
+                }
+
+                }
+
+                if ($change_det == 1 ) {
+                try
+                {
+
+                        // DE DNS RECORDS DIE AANGEPAST WORDEN HIERONDER OPNEMEN
+
+                $dnsEntries = array();
+                $dnsEntries[] = new Transip_DnsEntry('@', 86400, Transip_DnsEntry::TYPE_A, $ipAddress);
+                $dnsEntries[] = new Transip_DnsEntry('*', 86400, Transip_DnsEntry::TYPE_A, $ipAddress);
+                $dnsEntries[] = new Transip_DnsEntry('mail', 86400, Transip_DnsEntry::TYPE_A, $ipAddress);
+                $dnsEntries[] = new Transip_DnsEntry('cloud', 86400, Transip_DnsEntry::TYPE_A, $ipAddress);
+                $dnsEntries[] = new Transip_DnsEntry('monitoring', 86400, Transip_DnsEntry::TYPE_A, $ipAddress);
+                $dnsEntries[] = new Transip_DnsEntry('phpmyadmin', 86400, Transip_DnsEntry::TYPE_A, $ipAddress);
+                $dnsEntries[] = new Transip_DnsEntry('server', 86400, Transip_DnsEntry::TYPE_A, $ipAddress);
+                $dnsEntries[] = new Transip_DnsEntry('www', 86400, Transip_DnsEntry::TYPE_A, $ipAddress);
+                $dnsEntries[] = new Transip_DnsEntry('router', 86400, Transip_DnsEntry::TYPE_A, $ipAddress);
+
+                // Andere type records updaten? (check de TransIP API documentatie!)
+                // https://api.transip.nl/docs/transip.nl/package-Transip.html?_ga=2.18506942.664913172.1503732730-365087631.1503639322
+
+                // Voer de update uit...
+                Transip_DomainService::setDnsEntries($domain, $dnsEntries);
+
+                // Stukje logging naar een TXT bestand.
+                $time = date('d/m/Y h:i:s a', time());
+                file_put_contents("logg.txt", "". $time ." - !!UPDATE UITGEVOERD!! --> Nieuw IP: ". $ipAddress ." \r\n", FILE_APPEND);
+
+
+                // Klaar!
+                echo "DNS aangepast.".PHP_EOL;
+                }
+                catch(SoapFault $f)
+                {
+                // Fout?
+                echo "Foutje, DNS niet geupdated... " . $f->getMessage().PHP_EOL;
+                }
+                }
+        }
+}
+?>

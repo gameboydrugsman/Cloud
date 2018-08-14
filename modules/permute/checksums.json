@@ -1,0 +1,12 @@
+{
+  "Gemfile": "669eb356e6c5b820e1bfd508f2110c0a",
+  "Gemfile.lock": "bdeb8d72093fa051dec3005a85230327",
+  "Modulefile": "c24b80345fbb716c69ef7144a78ee9b1",
+  "README.md": "f4a541c4a72d43aafa92b3197e238f6e",
+  "lib/puppet/parser/functions/resource_permute.rb": "def5e886d901b6600cde930586db8ddd",
+  "manifests/init.pp": "5e8e29884207de09c00bff9138b7f58e",
+  "spec/functions/resource_permute_spec.rb": "a8730a31c982c72d2d42cc7acb82e9b2",
+  "spec/spec_helper.rb": "dbd7e02cbaa269d7d8319f786e8a0949",
+  "tests/notify.pp": "d11e4c3ad5f20768af99e157b26f20cd",
+  "tests/pxe.pp": "51a5383413a70b9e5368cbfa9424a515"
+}
