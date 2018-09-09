@@ -190,10 +190,10 @@ def register_page():
                     postcode = restapi_postcode
                     data = ({"Naam": register_name, "Password": register_password, "Adres": adres,
                              "Postcode": postcode})
-                    r = requests.post('http://10.1.0.15:5000/registreren', json=data)
+                    r = requests.post('http://backend:5000/registreren', json=data)
                     headers = {'Content-type': 'application/json'}
                     #time.sleep(2)
-                    r = requests.get('http://10.1.0.15:5000/gebruikers', json={"naam": "Daniel"})
+                    r = requests.get('http://backend:5000/gebruikers', json={"naam": "Daniel"})
                     headers = {'Content-type': 'application/json'}
                     pils = r.content
                     str2 = bytes.decode(pils)
