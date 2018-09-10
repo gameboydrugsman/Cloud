@@ -63,7 +63,7 @@ def login():
                             print ('log testen')
                             currenttime = datetime.datetime.now().time().isoformat()
                             write_to_log = "[" + currenttime + "]" + "De user: " + str(login_name) + " heeft ingelogd!\r\n"
-                            with open("C:/Users/Daniel van Liempd/PycharmProjects/Practicum-cloudinfra/venv/static/logfile.txt", "a") as myfile:
+                            with open("/Cloud/test.log", "a") as myfile:
                                 myfile.write(write_to_log)
                             print ('log weggeschreven')
 
