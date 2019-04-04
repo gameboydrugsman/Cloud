@@ -1,64 +1,73 @@
-resource "openstack_blockstorage_volume_v1" "Mongo" {
-  name     = "Mongo"
-  size     = 10
-  image_id = "Mongo"
-}
-
-resource "openstack_compute_instance_v2" "mongo" {
-  name            = "mongo"
-  flavor_name       = "right"
-  key_pair        = "test"
-  security_groups = ["default,Mongo"]
-
-  block_device {
-    uuid                  = "${openstack_blockstorage_volume_v1.Mongo.id}"
-    source_type           = "volume"
-    boot_index            = 0
-    destination_type      = "volume"
-  }
-
-  network {
-    name = "private"
-  }
-}
-
-resource "openstack_compute_instance_v2" "backend" {
-  name            = "backend"
-  image_name        = "Python_web"
-  flavor_id      = "1"
-  key_pair        = "test"
-  security_groups = ["default","HTTP"]
-
-  metadata {
-    this = "that"
-  }
-
-  network {
-    name = "private"
-  }
-}
-
-resource "openstack_compute_instance_v2" "web" {
-  name            = "web"
-  image_name        = "Python_web"
-  flavor_id       = "1"
-  key_pair        = "test"
-  security_groups = ["default","HTTP"]
-
-  metadata {
-    this = "that"
-  }
-
-  network {
-    name = "private"
-  }
-}
-
-resource "openstack_networking_floatingip_v2" "fip_1" {
+resource "openstack_networking_floatingip_v2" "floatip_1" {
   pool = "public"
 }
 
-resource "openstack_compute_floatingip_associate_v2" "fip_1" {
-  floating_ip = "${openstack_networking_floatingip_v2.fip_1.address}"
-  instance_id = "${openstack_compute_instance_v2.web.id}"
+resource "openstack_networking_floatingip_v2" "floatip_2" {
+  pool = "public"
+}
+
+resource "openstack_compute_floatingip_associate_v2" "floatip_1" {
+    floating_ip = "${openstack_networking_floatingip_v2.floatip_1.address}"
+    instance_id = "${openstack_compute_instance_v2.docker-slave01.id}"
+}
+
+resource "openstack_compute_floatingip_associate_v2" "floatip_2" {
+  floating_ip = "${openstack_networking_floatingip_v2.floatip_2.address}"
+  instance_id = "${openstack_compute_instance_v2.docker-master.id}"
+}
+
+resource "openstack_compute_instance_v2" "docker-master" {
+  name            = "docker-master"
+  image_name        = "centos"
+  flavor_name       = "ds1G"
+  key_pair        = "linius-openstack"
+  security_groups = ["default"]
+
+  network {
+    name = "private"
+  }
+}
+
+resource "openstack_compute_instance_v2" "docker-slave01" {
+  name            = "docker-slave01"
+  image_name        = "centos"
+  flavor_name       = "ds1G"
+  key_pair        = "linius-openstack"
+  security_groups = ["default"]
+
+  network {
+    name = "private"
+  }
+}
+
+resource "null_resource" "provision_docker-master" {
+  depends_on = ["openstack_compute_floatingip_associate_v2.floatip_2"]
+  connection {
+    user        = "centos"
+    timeout = "1m"
+    host        = "${openstack_networking_floatingip_v2.floatip_2.address}"
+    private_key = "${file("/home/joris/openstack_keys/id_rsa-openstack")}"
+    agent = "false"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "curl -L https://bootstrap.saltstack.com -o install_salt.sh && sudo sh install_salt.sh -P -A 192.168.178.100",
+    ]
+  }
+}
+resource "null_resource" "provision_docker-slave01" {
+  depends_on = ["openstack_compute_floatingip_associate_v2.floatip_1"]
+  connection {
+    user        = "centos"
+    timeout = "1m"
+    host        = "${openstack_networking_floatingip_v2.floatip_1.address}"
+    private_key = "${file("/home/joris/openstack_keys/id_rsa-openstack")}"
+    agent = "false"
+  }
+    provisioner "remote-exec" {
+    inline = [
+      "curl -L https://bootstrap.saltstack.com -o install_salt.sh && sudo sh install_salt.sh -P -A 192.168.178.100",
+    ]
+  }
 }

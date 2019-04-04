@@ -10,20 +10,20 @@ variable "openstack_tenant_name" {
 
 variable "openstack_password" {
     description = "The password for the Tenant."
-    default  = "secure"
+    default  = "Test2018!"
 }
 
 variable "openstack_auth_url" {
     description = "The endpoint url to connect to OpenStack."
-    default  = "http://192.168.190.100:5000/v2.0"
+    default  = "http://192.168.178.150/identity/v3"
 }
 
 variable "openstack_keypair" {
     description = "The keypair to be used."
-    default  = "test"
+    default  = "linius"
 }
 
 variable "tenant_network" {
     description = "The network to be used."
-    default  = "public"
+    default  = "private"
 }
