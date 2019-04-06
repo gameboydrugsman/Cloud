@@ -3,8 +3,8 @@ from pymongo import MongoClient
 import urllib
 
 app = Flask(__name__)
-username = urllib.quote_plus('root')
-password = urllib.quote_plus('example')
+username = urllib.parse.quote_plus('root')
+password = urllib.parse.quote_plus('example')
 client = MongoClient('mongodb://%s:%s@mongo' % (username, password))
 mongo = client['gebruikers']
 collection = mongo.users
