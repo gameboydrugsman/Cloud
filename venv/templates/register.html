@@ -1,0 +1,33 @@
+<html>
+    
+    <head>
+	   <h1 class="intro">Registeren</h1>
+
+    </head>
+   
+   <body>
+
+    <form method="GET" value="Execute">
+
+        <div class="register_username">
+            Username:&emsp;
+            <input type="text" placeholder = "Username"	name="register_username" value = "{{request.args.get.register_username}}"		/>      
+        </div><br>
+        
+		<div class="register_password">
+            Wachtwoord:             
+            <input type="password" 	placeholder = "Wachtwoord"  name="register_password"	value = "{{request.args.get.register_password}}"	/> (minimaal 8 karakters en een cijfer)
+        </div><br>
+        
+        <div class="adres">
+            Adres&emsp;&emsp;&ensp;&ensp;
+            <input type="text" placeholder = "adres"	name="adres" value = "{{request.args.get.adres}}"		/>      
+        </div><br>      
+        
+            Postcode:&emsp;&ensp;
+            <input type="text" placeholder = "postcode"	name="postcode" value = "{{request.args.get.postcode}}"	/>&ensp;
+		<input type="Submit" class="submitval" value="Registreer!"/>
+    </form>
+		
+        <a href="/login" class="login_link">Terug naar loginscherm</a>
+    

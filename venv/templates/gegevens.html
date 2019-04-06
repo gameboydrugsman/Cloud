@@ -1,0 +1,87 @@
+<html>
+       <head>
+	        <style>
+		        ul {
+    	        	list-style-type: none;
+    	        	margin: 0;
+    	        	padding: 0;
+    	        	overflow: hidden;
+    	        	background-color: #333;
+		        }
+
+	        	li {
+   	        	 float: left;
+	        	}
+
+	        	li a {
+            		display: block;
+            		color: white;
+    	        	text-align: center;
+    	        	padding: 14px 16px;
+            		text-decoration: none;
+	        	}
+
+	        	li a:hover {
+            		background-color: #111;
+	        	}
+	        </style>
+        </head>
+        <nav>
+
+          <ul>
+            <li><a href=	"/homepage"	    >	Homepagina          </a></li>
+            <li><a href=	"/login"		>	Inlogscherm		    </a></li>
+            <li><a href=	"/register"		>	Registreren	        </a></li>
+            <li><a href=	"/gegevens"		>	Gegevens            </a></li>
+
+          </ul>
+        </nav>
+   
+   <body>
+      	<br>
+
+	<h1 class="intro">Hier kunt u alle gegevens opvragen!</h1>
+
+
+    <h3> Dit zijn uw persoonlijke gegevens: </h3>
+    Gebruikersnaam:&ensp;               {{ session['username'] }} <br>
+    Wachtwoord:&emsp;&emsp;             {{ session['password'] }}<br>
+    Adres&emsp;&emsp;&emsp;&emsp;&emsp; {{ session['adres'] }}<br>
+    Postcode  &emsp;&emsp;&emsp;&ensp;        {{ session['postcode'] }}
+       
+       <br><br><a href="/login" class="login_link">Terug naar loginscherm</a>   
+    </body>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

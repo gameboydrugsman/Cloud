@@ -1,0 +1,82 @@
+<html>
+       <head>
+	        <style>
+		        ul {
+    	        	list-style-type: none;
+    	        	margin: 0;
+    	        	padding: 0;
+    	        	overflow: hidden;
+    	        	background-color: #333;
+		        }
+
+	        	li {
+   	        	 float: left;
+	        	}
+
+	        	li a {
+            		display: block;
+            		color: white;
+    	        	text-align: center;
+    	        	padding: 14px 16px;
+            		text-decoration: none;
+	        	}
+
+	        	li a:hover {
+            		background-color: #111;
+	        	}
+	        </style>
+        </head>
+        <nav>
+
+          <ul>
+            <li><a href=	"/admin_homepage" >	      Homepagina                              </a></li>
+            <li><a href=	"/login"		  >	      Inlogscherm		                      </a></li>
+            <li><a href=	"/register"		  >	      Registreren	                          </a></li>
+            <li><a href=	"/instances"      >	      Instances uitrollen
+                   </a></li>
+            <li><a href=	"/admin_gegevens" >	      Gegevens van andere gebruikers zoeken   </a></li>
+
+          </ul>
+        </nav>
+   
+   <body>
+      	<br>
+
+	<h1 class="intro">Hier kunt u alle gegevens opvragen!</h1>
+
+
+    <h3> Dit zijn uw persoonlijke gegevens: </h3>
+    Gebruikersnaam:&ensp;               {{ session['username'] }} <br>
+    Wachtwoord:&emsp;&emsp;             {{ session['password'] }}<br>
+    Adres&emsp;&emsp;&emsp;&emsp;&emsp; {{ session['adres'] }}<br>
+    Postcode  &emsp;&emsp;&emsp;&ensp;        {{ session['postcode'] }}
+     <br>
+       
+       <h3> 
+	<form method="GET" value="Execute">
+           U kunt ook gegevens van anderen zoeken. Zoek op bijvoorbeeld: </h3>
+           
+           Gebruikersnaam&ensp;
+        
+           <input type="text" placeholder = "Username"	name="zoekusername" value = "{{request.args.get.zoekusername}}"	/> <br><br>
+            Wachtwoord: &emsp;&ensp;
+            <input type="password" 	placeholder = "Wachtwoord"  name="zoekpassword"	value = "{{request.args.get.zoekpassword}}"	/><br><br>
+            Adres:   &emsp;&emsp;     &emsp;&ensp;&ensp;
+            <input type="text" 	placeholder = "Adres"  name="zoekadres"	value = "{{request.args.get.zoekadres}}"	/>
+            <br><br>
+            Postcode: &emsp;&emsp;&ensp;&ensp;
+            <input type="text" 	placeholder = "Postcode"  name="zoekpostcode"	value = "{{request.args.get.zoekpostcode}}"	/> &ensp;
+       		<input type="Submit" class="submitval" value="Zoek!"/>
+    </form>
+       
+     <h3> Dit zijn de gegevens die u opzocht: </h3>
+    Gebruikersnaam:&ensp;               {{ session['zoek_username'] }} <br>
+    Wachtwoord:&emsp;&emsp;             {{ session['zoek_password'] }}<br>
+    Adres&emsp;&emsp;&emsp;&emsp;&emsp; {{ session['zoek_adres'] }}<br>
+    Postcode  &emsp;&emsp;&emsp;&ensp;        {{ session['zoek_postcode'] }}
+      
+       <br><br><a href="/login" class="login_link">Terug naar loginscherm</a>   
+    </body>
+
+    
+    

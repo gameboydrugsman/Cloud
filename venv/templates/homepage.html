@@ -1,0 +1,53 @@
+<html>
+       <head>
+	        <style>
+		        ul {
+    	        	list-style-type: none;
+    	        	margin: 0;
+    	        	padding: 0;
+    	        	overflow: hidden;
+    	        	background-color: #333;
+		        }
+
+	        	li {
+   	        	 float: left;
+	        	}
+
+	        	li a {
+            		display: block;
+            		color: white;
+    	        	text-align: center;
+    	        	padding: 14px 16px;
+            		text-decoration: none;
+	        	}
+
+	        	li a:hover {
+            		background-color: #111;
+	        	}
+	        </style>
+        </head>
+        <nav>
+
+          <ul>
+            <li><a href=	"/homepage"	    >	Homepagina          </a></li>
+            <li><a href=	"/login"		>	Inlogscherm		    </a></li>
+            <li><a href=	"/register"		>	Registreren	        </a></li>
+            <li><a href=	"/gegevens"		>	Gegevens            </a></li>
+
+          </ul>
+        </nav>
+   
+   <body>
+      	<br>
+
+	<h1 class="intro">Welkom op de homepagina {{ session['username']  }}!</h1>
+
+Sportschool “Menno Altijd Fit” (MAF) wil naar de cloud! Logisch ook, Menno heeft altijd hard gewerkt en <br> door slim te investeren is hij andere sportscholen, mijlenver vooruitgestreefd. Om maar eens wat te <br> noemen: Bewegen is goed, maar niet iedereen heeft altijd zin om hiervoor naar een sportschool te gaan.<br> Een deel van het programma inclusief de coaching kan ook vanuit huis via de cloud worden aangeboden <br>denkt Menno, onder de naam “MAF at Home”. Slim toch?! Bovendien, veel mensen hebben goede<br> voornemens na de feestdagen en dan is het druk in zijn sportscholen, in de zomermaanden is het<br> daarentegen heel rustig. Bovendien, om de competitie voor te blijven wil Menno kosten besparen.<br> Kortom, het moet elastischer, toegankelijk worden voor iedereen vanaf iedere plek en goed<br> geautomatiseerd. Je snapt het al: De volgende stap voor Menno is geheel of gedeeltelijke migratie naar <br> “de cloud” zodat hij kan opereren “as a service”.       
+<br><br>
+       
+       <a href="/login" class="login_link">Terug naar loginscherm</a>
+
+       
+    </body>
+
+    
