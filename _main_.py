@@ -10,7 +10,9 @@ app.secret_key = os.urandom(24)
 ipadressbackend = 'backend'
 ipaddressmongodb = 'mongo'
 port = 27017
-client = MongoClient(ipaddressmongodb, port)
+username = urllib.quote_plus('root')
+password = urllib.quote_plus('example')
+client = MongoClient('mongodb://%s:%s@mongo' % (username, password))
 db = client.gebruikers
 collection = db.users
 
