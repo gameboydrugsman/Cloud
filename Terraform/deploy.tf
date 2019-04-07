@@ -45,13 +45,8 @@ resource "openstack_networking_floatingip_v2" "floatip_1" {
   pool = "public"
 }
 
-resource "openstack_compute_floatingip_associate_v2" "floatip_1" {
-  floating_ip = "${openstack_networking_floatingip_v2.floatip_1.address}"
-  instance_id = "${openstack_compute_instance_v2.docker-slave.id[count.index]}"
-}
-
-resource "openstack_compute_instance_v2" "docker-slave" {
-  name            = "${format("docker-slave-%03d", count.index + 1)}"
+resource "openstack_compute_instance_v2" "docker-slave01" {
+  name            = "docker-slave01"
   image_name        = "centos"
   flavor_name       = "ds1G"
   key_pair        = "linius-openstack"
@@ -60,10 +55,13 @@ resource "openstack_compute_instance_v2" "docker-slave" {
   network {
     name = "private"
   }
-  count = "${var.count}"
+}
+resource "openstack_compute_floatingip_associate_v2" "floatip_1" {
+  floating_ip = "${openstack_networking_floatingip_v2.floatip_1.address}"
+  instance_id = "${openstack_compute_instance_v2.docker-slave01.id}"
 }
 
-resource "null_resource" "provision_docker-slave" {
+resource "null_resource" "provision_docker-slave01" {
   #depends_on = ["openstack_compute_floatingip_associate_v2.floatip_1"]
   connection {
     user        = "centos"
@@ -78,3 +76,37 @@ resource "null_resource" "provision_docker-slave" {
     ]
   }
 }
+resource "openstack_networking_floatingip_v2" "floatip_3" {
+  pool = "public"
+}
+# resource "openstack_compute_instance_v2" "nfs-saltmaster" {
+#   name            = "nfs-saltmaster"
+#   image_name        = "centos"
+#   flavor_name       = "ds1G"
+#   key_pair        = "linius-openstack"
+#   security_groups = ["default"]
+
+#   network {
+#     name = "private"
+#   }
+# }
+# resource "openstack_compute_floatingip_associate_v2" "floatip_3" {
+#   floating_ip = "${openstack_networking_floatingip_v2.floatip_3.address}"
+#   instance_id = "${openstack_compute_instance_v2.nfs-saltmaster.id}"
+# }
+
+# resource "null_resource" "provision_nfs-saltmaster" {
+#   #depends_on = ["openstack_compute_floatingip_associate_v2.floatip_1"]
+#   connection {
+#     user        = "centos"
+#     timeout = "1m"
+#     host        = "${openstack_networking_floatingip_v2.floatip_1.address}"
+#     private_key = "${file("/home/joris/openstack_keys/id_rsa-openstack")}"
+#     agent = "false"
+#   }
+#     provisioner "remote-exec" {
+#     inline = [
+#       "yum install -y git && curl -L https://bootstrap.saltstack.com -o install_salt.sh && sudo sh install_salt.sh -P -M -L -A 192.168.178.100",
+#     ]
+#   }
+# }

@@ -13,7 +13,7 @@
 export OS_AUTH_URL=http://192.168.178.150/identity/v3
 # With the addition of Keystone we have standardized on the term **project**
 # as the entity that owns the resources.
-export OS_PROJECT_ID=dc6b2221790e435eab805521c95219ab
+export OS_PROJECT_ID=eb99cb15245147b7a1c9d2e1a53f9b9e
 export OS_PROJECT_NAME="demo"
 export OS_USER_DOMAIN_NAME="Default"
 if [ -z "$OS_USER_DOMAIN_NAME" ]; then unset OS_USER_DOMAIN_NAME; fi
