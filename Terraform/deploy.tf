@@ -76,11 +76,12 @@ resource "null_resource" "provision_docker-slave01" {
     ]
   }
 }
-resource "openstack_networking_floatingip_v2" "floatip_3" {
-  pool = "public"
-}
-# resource "openstack_compute_instance_v2" "nfs-saltmaster" {
-#   name            = "nfs-saltmaster"
+# resource "openstack_networking_floatingip_v2" "floatip_3" {
+#   pool = "public"
+# }
+
+# resource "openstack_compute_instance_v2" "docker-slave02" {
+#   name            = "docker-slave02"
 #   image_name        = "centos"
 #   flavor_name       = "ds1G"
 #   key_pair        = "linius-openstack"
@@ -92,21 +93,21 @@ resource "openstack_networking_floatingip_v2" "floatip_3" {
 # }
 # resource "openstack_compute_floatingip_associate_v2" "floatip_3" {
 #   floating_ip = "${openstack_networking_floatingip_v2.floatip_3.address}"
-#   instance_id = "${openstack_compute_instance_v2.nfs-saltmaster.id}"
+#   instance_id = "${openstack_compute_instance_v2.docker-slave02.id}"
 # }
 
-# resource "null_resource" "provision_nfs-saltmaster" {
+# resource "null_resource" "provision_docker-slave02" {
 #   #depends_on = ["openstack_compute_floatingip_associate_v2.floatip_1"]
 #   connection {
 #     user        = "centos"
 #     timeout = "1m"
-#     host        = "${openstack_networking_floatingip_v2.floatip_1.address}"
+#     host        = "${openstack_networking_floatingip_v2.floatip_3.address}"
 #     private_key = "${file("/home/joris/openstack_keys/id_rsa-openstack")}"
 #     agent = "false"
 #   }
 #     provisioner "remote-exec" {
 #     inline = [
-#       "yum install -y git && curl -L https://bootstrap.saltstack.com -o install_salt.sh && sudo sh install_salt.sh -P -M -L -A 192.168.178.100",
+#       "curl -L https://bootstrap.saltstack.com -o install_salt.sh && sudo sh install_salt.sh -P -A 192.168.178.100",
 #     ]
 #   }
 # }
