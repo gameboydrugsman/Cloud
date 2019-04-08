@@ -13,7 +13,7 @@ ipaddressmongodb = '192.168.178.150'
 port = 27017
 username = urllib.parse.quote_plus('root')
 password = urllib.parse.quote_plus('example')
-client = MongoClient('mongodb://%s:%s@mongo' % (username, password))
+client = MongoClient('mongodb://%s:%s@192.168.178.150' % (username, password))
 db = client.gebruikers
 collection = db.users
 
