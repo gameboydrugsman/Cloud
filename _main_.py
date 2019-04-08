@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 ipadressbackend = 'backend'
-ipaddressmongodb = 'mongo'
+ipaddressmongodb = '192.168.178.150'
 port = 27017
 username = urllib.parse.quote_plus('root')
 password = urllib.parse.quote_plus('example')
