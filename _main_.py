@@ -9,11 +9,11 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 ipadressbackend = 'backend'
-ipaddressmongodb = '192.168.178.150'
+ipaddressmongodb = 'mongo'
 port = 27017
 username = urllib.parse.quote_plus('root')
 password = urllib.parse.quote_plus('example')
-client = MongoClient('mongodb://%s:%s@192.168.178.150' % (username, password))
+client = MongoClient('mongodb://%s:%s@mongo' % (username, password))
 db = client.gebruikers
 collection = db.users
 
