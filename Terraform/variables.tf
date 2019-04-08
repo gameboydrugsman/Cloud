@@ -15,7 +15,7 @@ variable "openstack_password" {
 
 variable "openstack_auth_url" {
     description = "The endpoint url to connect to OpenStack."
-    default  = "http://192.168.178.150/identity/v3"
+    default  = "http://192.168.178.151/identity/v3"
 }
 
 variable "openstack_keypair" {

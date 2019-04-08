@@ -1,6 +1,6 @@
 resource "openstack_networking_floatingip_v2" "floatip_2" {
   pool = "public"
-  address = "192.168.178.15"
+  address = "192.168.178.16"
 }
 
 resource "openstack_compute_floatingip_associate_v2" "floatip_2" {
@@ -26,13 +26,13 @@ resource "null_resource" "provision_docker-master" {
     user        = "centos"
     timeout = "1m"
     host        = "${openstack_networking_floatingip_v2.floatip_2.address}"
-    private_key = "${file("/home/joris/openstack_keys/id_rsa-openstack")}"
+    private_key = "${file("~/.ssh/id_rsa")}"
     agent = "false"
   }
 
   provisioner "remote-exec" {
     inline = [
-      "curl -L https://bootstrap.saltstack.com -o install_salt.sh && sudo sh install_salt.sh -P -A 192.168.178.100",
+      "curl -L https://bootstrap.saltstack.com -o install_salt.sh && sudo sh install_salt.sh -P -A 192.168.178.150",
     ]
   }
 }
@@ -67,12 +67,12 @@ resource "null_resource" "provision_docker-slave01" {
     user        = "centos"
     timeout = "1m"
     host        = "${openstack_networking_floatingip_v2.floatip_1.address}"
-    private_key = "${file("/home/joris/openstack_keys/id_rsa-openstack")}"
+    private_key = "${file("~/.ssh/id_rsa")}"
     agent = "false"
   }
     provisioner "remote-exec" {
     inline = [
-      "curl -L https://bootstrap.saltstack.com -o install_salt.sh && sudo sh install_salt.sh -P -A 192.168.178.100",
+      "curl -L https://bootstrap.saltstack.com -o install_salt.sh && sudo sh install_salt.sh -P -A 192.168.178.150",
     ]
   }
 }
@@ -102,12 +102,48 @@ resource "null_resource" "provision_docker-slave01" {
 #     user        = "centos"
 #     timeout = "1m"
 #     host        = "${openstack_networking_floatingip_v2.floatip_3.address}"
-#     private_key = "${file("/home/joris/openstack_keys/id_rsa-openstack")}"
+#     private_key = "${file("~/.ssh/id_rsa")}"
 #     agent = "false"
 #   }
 #     provisioner "remote-exec" {
 #     inline = [
-#       "curl -L https://bootstrap.saltstack.com -o install_salt.sh && sudo sh install_salt.sh -P -A 192.168.178.100",
+#       "curl -L https://bootstrap.saltstack.com -o install_salt.sh && sudo sh install_salt.sh -P -A 192.168.178.150",
+#     ]
+#   }
+# }
+
+# resource "openstack_networking_floatingip_v2" "floatip_4" {
+#   pool = "public"
+# }
+
+# resource "openstack_compute_instance_v2" "mongodb_total" {
+#   name            = "mongodb_total"
+#   image_name        = "centos"
+#   flavor_name       = "ds1G"
+#   key_pair        = "linius-openstack"
+#   security_groups = ["default"]
+
+#   network {
+#     name = "private"
+#   }
+# }
+# resource "openstack_compute_floatingip_associate_v2" "floatip_4" {
+#   floating_ip = "${openstack_networking_floatingip_v2.floatip_4.address}"
+#   instance_id = "${openstack_compute_instance_v2.mongodb_total.id}"
+# }
+
+# resource "null_resource" "provision_mongodb_total" {
+#   #depends_on = ["openstack_compute_floatingip_associate_v2.floatip_1"]
+#   connection {
+#     user        = "centos"
+#     timeout = "1m"
+#     host        = "${openstack_networking_floatingip_v2.floatip_4.address}"
+#     private_key = "${file("~/.ssh/id_rsa")}"
+#     agent = "false"
+#   }
+#     provisioner "remote-exec" {
+#     inline = [
+#       "curl -L https://bootstrap.saltstack.com -o install_salt.sh && sudo sh install_salt.sh -P -A 192.168.178.150",
 #     ]
 #   }
 # }
